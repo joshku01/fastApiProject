@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  fast-web:
+    build: .
+    restart: on-failure
+    command: uvicorn main:app --host 0.0.0.0 --port 8089 --reload # local docker hot reload方法
+    ports:
+      - '8089:8089'
+    container_name: fast_python
+    volumes:
+      - .:/app
+    networks:
+      - web_service
+  fast-db:
+    image: mariadb
+    container_name: fastDB
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root # DB 密碼
+      MYSQL_DATABASE: fast
+    volumes:
+      - /DB/fast:/var/lib/mysql
+    networks:
+      - web_service
+networks:
+  web_service:
+    external: true

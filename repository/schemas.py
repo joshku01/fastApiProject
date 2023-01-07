@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Union
 
 
 class UserBase(BaseModel):
@@ -8,7 +9,7 @@ class UserBase(BaseModel):
 # 新增User定義地方
 class UserCreate(UserBase):
     password: str
-    is_active: bool
+    is_active: Union[bool, None]
 
 
 class User(UserBase):
@@ -17,3 +18,10 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+
+class Item(BaseModel):
+    name: str
+    description: Union[str, None] = None
+    price: float
+    tax: Union[float, None] = None

@@ -30,6 +30,14 @@ async def get_user(user_id: int, db: Session = Depends(get_db_session)):
     return user
 
 
+@router.delete("/user/{user_id}", response_model=schemas.User)
+async def delete_user(user_id: int, db: Session = Depends(get_db_session)):
+    user = crud.delete_user(db, user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User Not Found")
+    return user
+
+
 # 新增使用者
 @router.post("/users", response_model=schemas.User)
 async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db_session)):

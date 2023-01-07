@@ -1,14 +1,17 @@
-import abc
 from abc import ABC, abstractmethod
 
 
 class Person:
-    def __init__(self, first, last):
+    def __init__(self, first, last, nickname):
         self.firstname = first
         self.lastname = last
+        self.__nickname = nickname  # 前面使用__作為私有屬性
 
     def info(self):
         print(f'{self.firstname}: {self.lastname}')
+
+    def __type(self, nickname):  # 使用__作為私有方法(private method)
+        self.__nickname = nickname
 
 
 class Member(Person):
@@ -64,13 +67,13 @@ class NormalMember(Member):
 
 
 class Login(ABC):
-    # 抽象類登入方法
+    # 抽象類登入方法,抽象方法需要由繼承方式來實做
     @abstractmethod
     def login(self):
         pass
 
 
-# 繼承抽象類別Login,並且實作login() method
+# 繼承抽象類別Login,並且實作login() method ,多型方法
 class FacebookLogin(Login):
     def login(self):
         print('facebook login method')
@@ -84,3 +87,15 @@ class GoogleLogin(Login):
 class LineLogin(Login):
     def login(self):
         print('Line login method')
+
+
+class TwitterLogin(Login):
+    level = 2  # 類別屬性
+
+    @classmethod  # 類別方法使用@clossmethod 裝飾詞,由於參數為cls指向Class,僅能改變Class Method的狀態,無法改變物件狀態
+    def login(cls):
+        print(f"Twitter login member level is {cls.level}")
+
+    @staticmethod  # 靜態方法,無法改變Class,Object狀態
+    def accelerate():
+        print('Accelerate is {0} {1}.'.format('statis', 'method'))  # 格式畫輸出方法,可以指定括號裡面順序

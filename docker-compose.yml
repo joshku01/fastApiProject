@@ -4,9 +4,9 @@ services:
   fast-web:
     build: .
     restart: on-failure
-    command: uvicorn main:app --host 0.0.0.0 --port 8089 --reload # local docker hot reload方法
+    command: uvicorn main:app --host 0.0.0.0 --port 8088 --reload # local docker hot reload方法
     ports:
-      - '8089:8089'
+      - '8088:8088'
     container_name: fast_python
     volumes:
       - .:/app
